@@ -1,7 +1,11 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install nginx -y
-RUN service nginx start
+RUN mkdir /etc/nginx/ssl
+COPY default /etc/nginx/sites-enabled/default
+COPY nginx.crt nginx.key /etc/nginx/ssl/
 
-CMD ["nginx", "-g", "deamon off"]
+ENTRYPOINT nginx -g 'daemon off;'
+
+
