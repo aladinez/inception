@@ -2,16 +2,21 @@ version: '3'
 
 services:
   db:
-    image: mysql:8.0
+    build: ./mariadb
     container_name: db
     restart: unless-stopped
+    ports:
+      - "3306:3306"
     env_file: .env
     environment:
       - MYSQL_DATABASE=wordpress
     volumes: 
-      - dbdata:/var/lib/mysql
-      - ./docker/mysql:/etc/mysql/conf.d
-    command: '--default-authentication-plugin=mysql_native_password'
+      - mariadb:/var/lib/mysql
+      # - ./docker/mysql:/etc/mysql/conf.d
+    # command: 
+    #   - '--default-authentication-plugin=mysql_native_password'
+    #   - mysql -u $MYSQL_USER -p$MYSQL_PASSWORD wordpress
+
     networks:
       - app-network
 
@@ -48,13 +53,18 @@ services:
       - app-network
 
 volumes:
-  dbdata:
+  mariadb:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/aez-zaou/data/mariadb
   wordpress:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /home/aez-zaou/data
+      device: /home/aez-zaou/data/wordpress
 
 networks:
   app-network:
