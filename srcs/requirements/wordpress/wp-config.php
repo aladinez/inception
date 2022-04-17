@@ -29,7 +29,7 @@ define( 'DB_USER', 'alae' );
 define( 'DB_PASSWORD', 'alae123' );
 
 /** Database hostname */
-define( 'DB_HOST', 'db' );
+define( 'DB_HOST', 'mariadb' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
